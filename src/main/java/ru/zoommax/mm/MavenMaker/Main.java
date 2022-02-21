@@ -36,10 +36,6 @@ public class Main {
             String fileName = destinationDir + File.separator +entry.getName();
             String nf = jar.getName().substring(jar.getName().lastIndexOf(File.separator)+1, jar.getName().lastIndexOf("."));
             File f = new File(nf+".pom");
-            File docs = new File(nf+"-javadoc.jar");
-            if (docs.exists()){
-            	exists(jar, entry, docs);
-            }
 
             if (fileName.contains("pom.xml")) {
                 System.out.println("Yes");
@@ -67,6 +63,11 @@ public class Main {
         }
         String pj = path+jar.getName().substring(jar.getName().lastIndexOf(File.separator)+1);
         String pf = path+f.getName();
+        File docs = new File(jar.getName().substring(jar.getName().lastIndexOf(File.separator)+1, jar.getName().lastIndexOf("."))+"-javadoc.jar");
+        if (docs.exists()){
+            Files.copy(Paths.get(docs.getName()), Paths.get(path+docs.getName()), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("JAVADOC exists and copied!");
+        }
         Files.copy(Paths.get(jar.getName()), Paths.get(pj), StandardCopyOption.REPLACE_EXISTING);
         Files.copy(f.toPath(), Paths.get(pf), StandardCopyOption.REPLACE_EXISTING);
         HashMap<String, String> tmp = xmldata(f);
