@@ -36,7 +36,10 @@ public class Main {
             String fileName = destinationDir + File.separator +entry.getName();
             String nf = jar.getName().substring(jar.getName().lastIndexOf(File.separator)+1, jar.getName().lastIndexOf("."));
             File f = new File(nf+".pom");
-
+            File docs = new File(nf+"-javadoc.jar");
+            if (docs.exists()){
+            	exists(jar, entry, docs);
+            }
 
             if (fileName.contains("pom.xml")) {
                 System.out.println("Yes");
@@ -91,7 +94,7 @@ public class Main {
                 "<versions>\n" +
                 "<version>"+tmp.get("version")+"</version>\n" +
                 "</versions>\n" +
-                "<lastUpdated"+ new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) +"</lastUpdated>\n" +
+                "<lastUpdated>"+ new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) +"</lastUpdated>\n" +
                 "</versioning>\n" +
                 "</metadata>");
         writer2.flush();
